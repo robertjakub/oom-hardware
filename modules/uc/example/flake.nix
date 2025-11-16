@@ -14,6 +14,7 @@
     nixosConfigurations.default = inputs.nixos-raspberrypi.lib.nixosSystem {
       system = "aarch64-linux";
       specialArgs = inputs;
+      trustCaches = false;
       modules =
         [
           # inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.base
@@ -30,7 +31,6 @@
             ];
             disabledModules = [ (modulesPath + "/rename.nix") ];
             # END:
-
             boot.loader.raspberryPi.bootloader = "kernel"; # default for new installation
             boot.consoleLogLevel = 7;
             users.users.root.initialPassword = ""; # FIXME
