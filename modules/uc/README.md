@@ -1,5 +1,9 @@
 # uCImages
 
+## Usage
+
+see [example flake](example/flake.nix)
+
 ## uCimages: building
 
 > [!TIP]
@@ -9,6 +13,8 @@
 SD image can be built with:
 
 ```
+cd <flake-main-dir>
+[...]
 nix build .#uCimages.cm4
 nix build .#uCimages.cm5
 ```
