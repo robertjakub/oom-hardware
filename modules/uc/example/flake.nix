@@ -4,26 +4,25 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-raspberrypi.url = "github:robertjakub/nixos-raspberrypi/develop"; # stick with my branch
     nixos-raspberrypi.inputs.nixpkgs.follows = "nixpkgs";
-    oom-hardware = {
-      url = "github:robertjakub/oom-hardware/devel";
-      inputs.nixpkgs.follow = "nixpkgs";
-      inputs.nixos-raspberrypi.follow = "nixos-raspberrypi";
-    };
+    oom-hardware.url = "github:robertjakub/oom-hardware/devel";
+    oom-hardware.inputs.nixpkgs.follows = "nixpkgs";
+    oom-hardware.inputs.nixos-raspberrypi.follows = "nixos-raspberrypi";
   };
 
   outputs = { self, nixpkgs, ... } @ inputs: {
 
     nixosConfigurations.default = inputs.nixos-raspberrypi.lib.nixosSystem {
       system = "aarch64-linux";
-      specialArgs = inputs // { oom-hardware = self; };
+      specialArgs = inputs;
       modules =
         [
           # inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.base
           # inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.bluetooth
           inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-          self.nixosModules.uc.kernel
-          self.nixosModules.uc.configtxt
-          self.nixosModules.uc.base-cm5
+          inputs.oom-hardware.nixosModules.uc.kernel
+          inputs.oom-hardware.nixosModules.uc.configtxt
+          # inputs.oom-hardware.nixosModules.uc.base-cm4
+          inputs.oom-hardware.nixosModules.uc.base-cm5
           ({ config, lib, pkgs, modulesPath, ... }: {
             # START: workaround, see NixOS/nixpkgs#398456
             imports = [
