@@ -28,18 +28,6 @@ in
           enable = mkDefault true;
           params = { };
         };
-        clockworkpi-uconsole-sound-switch = {
-          enable = mkDefault true;
-          params = { };
-        };
-        clockworkpi-uconsole-disable-genet = {
-          enable = mkDefault true;
-          params = { };
-        };
-        clockworkpi-uconsole-disable-pcie = {
-          enable = mkDefault true;
-          params = { };
-        };
         dwc2 = {
           enable = true;
           params = {
