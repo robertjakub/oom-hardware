@@ -29,6 +29,7 @@
           mkuCNixOSSD = modules: nixos-raspberrypi.lib.nixosSystem {
             system = "aarch64-linux";
             specialArgs = inputs // { uC-config = self; };
+            trustCaches = false;
             modules =
               [
                 "${nixpkgs}/nixos/modules/profiles/base.nix"
