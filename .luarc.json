@@ -1,0 +1,12 @@
+{
+	"hint.enable": true,
+	"diagnostics.disable": [
+		"undefined-global",
+		"lowercase-global",
+		"duplicate-set-field"
+	],
+	"diagnostics": {
+		"libraryFiles": "Disable",
+		"globals": []
+	}
+}
