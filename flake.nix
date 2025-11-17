@@ -136,7 +136,7 @@
           base-cm4 = import modules/uc/base-cm4.nix;
           base-cm5 = import modules/uc/base-cm5.nix;
         };
-        deskpi4 = import modules/deskpi4;
+        deskpi4 = { lib, pkgs, ... }: import modules/deskpi4 { inherit lib pkgs self; };
       };
 
       uCimages =

@@ -1,4 +1,4 @@
-{ self, lib, pkgs, ... }:
+{ lib, pkgs, self, ... }:
 let
   inherit (lib) mkDefault;
   device = "/dev/deskPi";
