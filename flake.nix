@@ -1,5 +1,5 @@
 {
-  description = "Flake for uConsole support on NixOS";
+  description = "Flake for oom's hardware support on NixOS";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-raspberrypi.url = "github:robertjakub/nixos-raspberrypi/develop";
@@ -7,8 +7,14 @@
   };
   outputs = { self, nixpkgs, nixos-raspberrypi, ... } @ inputs:
     let
+      rpiSystems = [ "aarch64-linux" "armv7l-linux" "armv6l-linux" ];
       allSystems = nixpkgs.lib.systems.flakeExposed;
       forSystems = systems: f: nixpkgs.lib.genAttrs systems (system: f system);
+      # te
+      mkRpiPkgs = nixpkgs: system: import nixpkgs {
+        inherit system; overlays = [ self.overlays.pkgs ];
+      };
+      mkLegacyPackagesFor = nixpkgs: forSystems rpiSystems (mkRpiPkgs nixpkgs);
     in
     {
       devShells = forSystems allSystems (system:
@@ -127,6 +133,7 @@
           base-cm4 = import modules/uc/base-cm4.nix;
           base-cm5 = import modules/uc/base-cm5.nix;
         };
+        deskpi4 = import modules/deskpi4;
       };
 
       uCimages =
@@ -138,5 +145,20 @@
           cm4 = mkImage nixos.uc-cm4-sdimage;
           cm5 = mkImage nixos.uc-cm5-sdimage;
         };
+
+      overlays = {
+        pkgs = import ./overlays/pkgs.nix;
+      };
+
+      legacyPackages = mkLegacyPackagesFor nixpkgs;
+
+      packages = forSystems rpiSystems (system:
+        let pkgs = self.legacyPackages.${system};
+        in
+        {
+          deskpi4-tools = pkgs.deskpi4-tools;
+        }
+      );
+
     };
 }
