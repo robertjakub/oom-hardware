@@ -127,6 +127,9 @@
         };
 
       nixosModules = {
+        nixpkgs-oom = { config, lib, pkgs, ... }: import ./modules/nixpkgs-oom.nix {
+          inherit config lib pkgs self;
+        };
         uc = {
           kernel = import modules/uc/kernel.nix;
           configtxt = import modules/uc/configtxt.nix;

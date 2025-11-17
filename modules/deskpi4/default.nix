@@ -1,16 +1,18 @@
-{ self, lib, ... }:
+{ self, lib, pkgs, ... }:
 let
   inherit (lib) mkDefault;
   device = "/dev/deskPi";
   opt = enable: value: { enable = mkDefault enable; value = mkDefault value; };
 in
 {
+  imports = [ self.nixosModules.nixpkgs-oom ];
+
   services.udev.extraRules = ''
     ACTION=="add", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SUBSYSTEM=="tty", SYMLINK+="${builtins.baseNameOf device}"
     ACTION=="add|change", ATTRS{idVendor}=="174c", ATTRS{idProduct}=="55aa", SUBSYSTEM=="scsi_disk", ATTR{provisioning_mode}="unmap"
   '';
 
-  systemd.packages = [ self.packages.deskpi4-tools ];
+  systemd.packages = [ pkgs.oom.deskpi4-tools ];
 
   systemd.services."deskpi-safe-shut" = {
     description = "DeskPi Safe-Shutdown Service";
@@ -24,7 +26,7 @@ in
     };
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${self.packages.deskpi4-tools}/bin/safeCutOffPower";
+      ExecStart = "${pkgs.oom.deskpi4-tools}/bin/safeCutOffPower";
       RemainAfterExit = "yes";
       TimeoutSec = "infinity";
       StandardOutput = "tty";
@@ -40,7 +42,7 @@ in
     };
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${self.packages.deskpi4-tools}/bin/pwmFanControl";
+      ExecStart = "${pkgs.oom.deskpi4-tools}/bin/pwmFanControl";
       RemainAfterExit = "no";
     };
   };
