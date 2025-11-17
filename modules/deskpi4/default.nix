@@ -12,7 +12,7 @@ in
     ACTION=="add|change", ATTRS{idVendor}=="174c", ATTRS{idProduct}=="55aa", SUBSYSTEM=="scsi_disk", ATTR{provisioning_mode}="unmap"
   '';
 
-  systemd.packages = [ pkgs.oom.deskpi4-tools ];
+  systemd.packages = [ pkgs.oom-hardware.deskpi4-tools ];
 
   systemd.services."deskpi-safe-shut" = {
     description = "DeskPi Safe-Shutdown Service";
@@ -26,7 +26,7 @@ in
     };
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.oom.deskpi4-tools}/bin/safeCutOffPower";
+      ExecStart = "${pkgs.oom-hardware.deskpi4-tools}/bin/safeCutOffPower";
       RemainAfterExit = "yes";
       TimeoutSec = "infinity";
       StandardOutput = "tty";
@@ -42,7 +42,7 @@ in
     };
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.oom.deskpi4-tools}/bin/pwmFanControl";
+      ExecStart = "${pkgs.oom-hardware.deskpi4-tools}/bin/pwmFanControl";
       RemainAfterExit = "no";
     };
   };
