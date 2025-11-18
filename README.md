@@ -7,3 +7,4 @@ See code for all available configurations.
 | Model                                     | Flake Module                           |
 | ----------------------------------------- | -------------------------------------- |
 | [uConsole](modules/uc)                    | `uc`                                   |
+| [deskPi4 Pro](modules/deskpi4)            | `deskpi4`                              |
