@@ -1,7 +1,7 @@
 { stdenv, fetchFromGitHub, gcc, device ? "/dev/deskPi", ... }:
 let
   pname = "deskpi4-tools";
-  version = "current-20240723";
+  version = "0-unstable-20240723";
 
   src = fetchFromGitHub {
     owner = "DeskPi-Team";
