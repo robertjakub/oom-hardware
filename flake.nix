@@ -127,7 +127,7 @@
         };
 
       nixosModules = {
-        nixpkgs-oom = { config, lib, pkgs, ... }: import ./modules/nixpkgs-oom.nix {
+        nixpkgs = { config, lib, pkgs, ... }: import ./modules/nixpkgs.nix {
           inherit config lib pkgs self;
         };
         uc = {

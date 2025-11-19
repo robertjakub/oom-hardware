@@ -5,7 +5,7 @@ let
   opt = enable: value: { enable = mkDefault enable; value = mkDefault value; };
 in
 {
-  imports = [ self.nixosModules.nixpkgs-oom ];
+  imports = [ self.nixosModules.nixpkgs ];
 
   services.udev.extraRules = ''
     ACTION=="add", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SUBSYSTEM=="tty", SYMLINK+="${builtins.baseNameOf device}"
