@@ -1,7 +1,5 @@
 { lib, ... }:
-let
-  inherit (lib) mkDefault;
-  opt = enable: value: { enable = mkDefault enable; value = mkDefault value; };
+let opt = enable: value: { enable = lib.mkDefault enable; value = lib.mkDefault value; };
 in
 {
   hardware.raspberry-pi.extra-config = ''
@@ -25,7 +23,7 @@ in
       };
       dt-overlays = {
         clockworkpi-uconsole = {
-          enable = mkDefault true;
+          enable = lib.mkDefault true;
           params = { };
         };
         dwc2 = {
@@ -35,7 +33,7 @@ in
           };
         };
         vc4-kms-v3d-pi4 = {
-          enable = mkDefault true;
+          enable = lib.mkDefault true;
           params = {
             cma-384 = opt true "on";
             nohdmi1 = opt true "off";
@@ -49,7 +47,7 @@ in
       };
       dt-overlays = {
         clockworkpi-uconsole-cm5 = {
-          enable = mkDefault true;
+          enable = lib.mkDefault true;
           params = {
             no_rp1eth = opt false true;
             no_sound_switch = opt false true;
@@ -58,7 +56,7 @@ in
           };
         };
         vc4-kms-v3d-pi5 = {
-          enable = mkDefault true;
+          enable = lib.mkDefault true;
           params = {
             cma-384 = opt true "on";
             nohdmi1 = opt true "off";
@@ -83,7 +81,7 @@ in
       dt-overlays = {
         vc4-kms-v3d = { enable = false; };
         audremap = {
-          enable = mkDefault true;
+          enable = lib.mkDefault true;
           params = {
             pin_12_13 = opt true "on";
           };
