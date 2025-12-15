@@ -135,6 +135,7 @@
           configtxt = import modules/uc/configtxt.nix;
           base-cm4 = import modules/uc/base-cm4.nix;
           base-cm5 = import modules/uc/base-cm5.nix;
+          sleep = { lib, pkgs, config, ... }: import modules/uc/uc-sleep.nix { inherit lib pkgs config; };
         };
         deskpi4 = { lib, pkgs, ... }: import modules/deskpi4 { inherit lib pkgs self; };
       };

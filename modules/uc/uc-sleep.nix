@@ -1,0 +1,39 @@
+{ pkgs, lib, config, ... }:
+let cfg = config.services.uc-sleep;
+in
+{
+  options.services.uc-sleep = {
+    enable = lib.mkEnableOption { };
+    package = lib.mkPackageOption pkgs.oom-hardware "uc-sleep" { };
+  };
+
+  config = lib.mkIf cfg.enable {
+    systemd.packages = [ cfg.package ];
+
+    systemd.services."sleep-remap-powerkey" = {
+      description = "Sleep Remap PowerKey";
+      after = [ "basic.target" ];
+      wantedBy = [ "basic.target" ];
+      serviceConfig = {
+        Restart = "always";
+        ExecStartPre = "${pkgs.kmod}/bin/modprobe uinput";
+        ExecStart = "${cfg.package}/bin/sleep_remap_powerkey";
+        StandardOutput = "journal";
+        StandardError = "journal";
+      };
+    };
+
+    systemd.services."sleep-power-control" = {
+      description = "Sleep Power Control Based on Display and Sleep State";
+      after = [ "basic.target" ];
+      wantedBy = [ "basic.target" ];
+      serviceConfig = {
+        Restart = "always";
+        ExecStart = "${cfg.package}/bin/sleep_power_control";
+        StandardOutput = "journal";
+        StandardError = "journal";
+      };
+    };
+
+  };
+}
