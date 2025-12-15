@@ -47,6 +47,26 @@ clockworkpi-uconsole
     charge_full_design_uah # default "6700000", battery capacity
 ```
 
+## modules 
+
+| Module                       | description                            |
+| ---------------------------- | -------------------------------------- |
+| nixosModules.uc.kernel       | custom kernel for uConsole             |
+| nixosModules.uc.configtxt    | default declarative config.txt         |
+| nixosModules.uc.sleep        | sleep support for uConsole             |
+
+## sleep support 
+
+> [!TIP]
+> to consume packages as `pkgs.oom-hardware` import `inputs.oom-hardware.nixosModules.nixpkgs`
+> or use `oom-hardware.packages.aarch64-linux.<package>`
+
+```
+imports = [ inputs.oom-hardware.nixosModules.uc.sleep ];
+services.uc-sleep.enable = true;
+services.uc-sleep.package = pkgs.oom-hardware.uc-sleep;
+```
+
 ## ToDo
 
 - 4G module script
