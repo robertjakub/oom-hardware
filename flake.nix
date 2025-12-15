@@ -160,6 +160,7 @@
         in
         {
           deskpi4-tools = pkgs.deskpi4-tools;
+          uc-sleep = pkgs.uc-sleep;
         }
       );
 
