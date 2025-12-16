@@ -54,6 +54,7 @@ clockworkpi-uconsole
 | nixosModules.uc.kernel       | custom kernel for uConsole             |
 | nixosModules.uc.configtxt    | default declarative config.txt         |
 | nixosModules.uc.sleep        | sleep support for uConsole             |
+| nixosModules.uc.module-4g    | enable/disable uC 4G module            |
 
 ## sleep support 
 
