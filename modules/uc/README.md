@@ -67,9 +67,19 @@ services.uc-sleep.enable = true;
 services.uc-sleep.package = pkgs.oom-hardware.uc-sleep;
 ```
 
+## 4G module 
+
+```
+imports = [ inputs.oom-hardware.nixosModules.uc.module-4g ];
+hardware.uc-module-4g.enable = true;
+
+# uconsole-4g [enable|disable]
+```
+
+
 ## ToDo
 
-- 4G module script
+- ~~4G module script~~
 - kernel overlays cleanup
 - documentation
 - tests...
