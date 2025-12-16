@@ -46,7 +46,7 @@ let
 in
 {
   options.hardware.uc-module-4g = {
-    enable = lib.mkEnableOption "Enable 4G module";
+    enable = lib.mkOption { type = lib.types.bool; default = true; };
     rpi-utils = lib.mkPackageOption pkgs.rpi "raspberrypi-utils" { };
   };
 

@@ -3,7 +3,7 @@ let cfg = config.services.uc-sleep;
 in
 {
   options.services.uc-sleep = {
-    enable = lib.mkEnableOption { };
+    enable = lib.mkOption { type = lib.types.bool; default = true; };
     package = lib.mkPackageOption pkgs.oom-hardware "uc-sleep" { };
   };
 
