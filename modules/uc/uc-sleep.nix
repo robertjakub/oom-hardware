@@ -20,7 +20,7 @@ in
       description = "Sleep Remap PowerKey";
       after = [ "basic.target" ];
       wantedBy = [ "basic.target" ];
-      enviroment = envFile;
+      environment = envFile;
       serviceConfig = {
         Restart = "always";
         ExecStartPre = "${pkgs.kmod}/bin/modprobe uinput";
@@ -34,7 +34,7 @@ in
       description = "Sleep Power Control Based on Display and Sleep State";
       after = [ "basic.target" ];
       wantedBy = [ "basic.target" ];
-      enviroment = envFile;
+      environment = envFile;
       serviceConfig = {
         Restart = "always";
         ExecStart = "${cfg.package}/bin/sleep_power_control";
