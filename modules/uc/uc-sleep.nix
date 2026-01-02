@@ -4,6 +4,7 @@
 # Long press (>= 0.7s): Normal shutdown
 #
 # The threshold can be configured via settings.
+# see [uConsole-sleep](https://github.com/robertjakub/uConsole-sleep/blob/main/README.md) for the possible settings
 
 { pkgs, lib, config, ... }:
 let
