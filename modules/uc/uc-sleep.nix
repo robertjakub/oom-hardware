@@ -24,7 +24,7 @@ in
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.oom-hardware "uc-sleep";
+      default = pkgs.oom-hardware.uc-sleep;
       description = "The uc-sleep package to use";
     };
 

@@ -55,7 +55,7 @@ in
 
     pinctrl = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.rpi "raspberrypi-utils";
+      default = pkgs.rpi.raspberrypi-utils;
       description = "Package providing pinctrl for GPIO control";
     };
   };
