@@ -88,3 +88,4 @@ hardware.uc-module-4g.enable = true;
 
 - [ClockworkPi](https://www.clockworkpi.com/) for the uConsole hardware
 - [nvmd/nixos-raspberrypi](https://github.com/nvmd/nixos-raspberrypi) for Raspberry Pi NixOS support
+- [nixos-uconsole/nixos-uconsole](https://github.com/nixos-uconsole/nixos-uconsole) for inspiration to make this module easier to use
