@@ -1,23 +1,43 @@
+# uConsole Sleep/Wake Power Button Handling
+#
+# Short press (< 0.7s): Toggle display (sleep/wake)
+# Long press (>= 0.7s): Normal shutdown
+#
+# The threshold can be configured via settings.
+
 { pkgs, lib, config, ... }:
 let
   cfg = config.services.uc-sleep;
   envFile = pkgs.writeTextFile {
     name = "uc-sleep.env";
-    text = (lib.concatStringsSep "\n" cfg.settings);
+    text = lib.concatStringsSep "\n" cfg.settings;
   };
 in
 {
   options.services.uc-sleep = {
-    enable = lib.mkOption { type = lib.types.bool; default = true; };
-    package = lib.mkPackageOption pkgs.oom-hardware "uc-sleep" { };
-    settings = lib.mkOption { type = with lib.types; listOf str; default = [ ]; };
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable uConsole sleep/wake power button handling";
+    };
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.oom-hardware "uc-sleep";
+      description = "The uc-sleep package to use";
+    };
+
+    settings = lib.mkOption {
+      type = with lib.types; listOf str;
+      default = [ ];
+      example = [ "HOLD_TRIGGER_SEC=1.0" ];
+      description = "Environment variables for uc-sleep services";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.packages = [ cfg.package ];
-
     systemd.services."sleep-remap-powerkey" = {
-      description = "Sleep Remap PowerKey";
+      description = "uConsole Sleep Remap PowerKey";
       after = [ "basic.target" ];
       wantedBy = [ "basic.target" ];
       serviceConfig = {
@@ -31,7 +51,7 @@ in
     };
 
     systemd.services."sleep-power-control" = {
-      description = "Sleep Power Control Based on Display and Sleep State";
+      description = "uConsole Sleep Power Control";
       after = [ "basic.target" ];
       wantedBy = [ "basic.target" ];
       serviceConfig = {
@@ -42,6 +62,5 @@ in
         EnvironmentFile = envFile;
       };
     };
-
   };
 }

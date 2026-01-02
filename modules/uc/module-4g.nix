@@ -1,56 +1,67 @@
+# uConsole 4G Module Support
+#
+# Provides uconsole-4g command to enable/disable the optional 4G expansion card.
+# Uses GPIO pins to control power to the modem.
+#
+# Usage:
+#   uconsole-4g enable   # Power on, wait for modem
+#   uconsole-4g disable  # Power off
+#   mmcli -L             # List detected modems
+#   nmtui                # Connect via NetworkManager
+
 { pkgs, lib, config, ... }:
 let
-  cfg = config.hardware.uc-module-4g;
+  cfg = config.hardware.uc-4g;
 
   uconsole-4g = pkgs.writeShellScriptBin "uconsole-4g" ''
-    function tip {
-      echo "use mmcli -L to see 4G modem or not"
+    function usage {
+      echo "Usage: $0 enable|disable"
+      echo ""
+      echo "Controls power to the 4G modem expansion card."
+      echo "After enabling, use 'mmcli -L' to verify modem is detected."
     }
 
     function enable4g {
-      echo "Power on 4G module on uConsole cm4"
-      ${cfg.rpi-utils}/bin/pinctrl set 24 op dh
-      ${cfg.rpi-utils}/bin/pinctrl set 15 op dh
+      echo "Powering on 4G module..."
+      ${cfg.pinctrl}/bin/pinctrl set 24 op dh
+      ${cfg.pinctrl}/bin/pinctrl set 15 op dh
       ${pkgs.coreutils}/bin/sleep 5
-      ${cfg.rpi-utils}/bin/pinctrl set 15 dl
-      echo "waiting..."
+      ${cfg.pinctrl}/bin/pinctrl set 15 dl
+      echo "Waiting for modem to initialize..."
       ${pkgs.coreutils}/bin/sleep 13
-      echo "done"
+      echo "Done. Use 'mmcli -L' to check modem status."
     }
 
     function disable4g {
-      echo "Power off 4G module"
-      ${cfg.rpi-utils}/bin/pinctrl set 24 op dl
-      ${cfg.rpi-utils}/bin/pinctrl set 24 dh
+      echo "Powering off 4G module..."
+      ${cfg.pinctrl}/bin/pinctrl set 24 op dl
+      ${cfg.pinctrl}/bin/pinctrl set 24 dh
       ${pkgs.coreutils}/bin/sleep 3
-      ${cfg.rpi-utils}/bin/pinctrl set 24 dl
+      ${cfg.pinctrl}/bin/pinctrl set 24 dl
       ${pkgs.coreutils}/bin/sleep 20
-      echo "Done"
+      echo "Done."
     }
 
-    if [ "$#" -ne 1 ] ; then
-      echo "$0: enable/disable"
-      exit 3
-    fi
-
-    if [ $1 == "enable" ]; then
-      enable4g;
-      tip;
-    fi
-
-    if [ $1 == "disable" ]; then
-      disable4g
-      tip;
-    fi
+    case "''${1:-}" in
+      enable)  enable4g ;;
+      disable) disable4g ;;
+      *)       usage; exit 1 ;;
+    esac
   '';
 in
 {
-  options.hardware.uc-module-4g = {
-    enable = lib.mkOption { type = lib.types.bool; default = true; };
-    rpi-utils = lib.mkPackageOption pkgs.rpi "raspberrypi-utils" { };
+  options.hardware.uc-4g = {
+    enable = lib.mkEnableOption "uConsole 4G module support";
+
+    pinctrl = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.rpi "raspberrypi-utils";
+      description = "Package providing pinctrl for GPIO control";
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    # The uconsole-4g control script
     environment.systemPackages = [ uconsole-4g ];
   };
 }

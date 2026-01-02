@@ -77,10 +77,14 @@ hardware.uc-module-4g.enable = true;
 # uconsole-4g [enable|disable]
 ```
 
-
 ## ToDo
 
 - ~~4G module script~~
 - kernel overlays cleanup
 - documentation
 - tests...
+
+## Credits
+
+- [ClockworkPi](https://www.clockworkpi.com/) for the uConsole hardware
+- [nvmd/nixos-raspberrypi](https://github.com/nvmd/nixos-raspberrypi) for Raspberry Pi NixOS support
