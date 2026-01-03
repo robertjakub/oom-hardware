@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   boot.kernelParams = [
     "8250.nr_uarts=1"
     # "vc_mem.mem_base=0x3ec00000"

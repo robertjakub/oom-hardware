@@ -1,4 +1,10 @@
-{ stdenv, fetchFromGitHub, gcc, device ? "/dev/deskPi", ... }:
+{
+  stdenv,
+  fetchFromGitHub,
+  gcc,
+  device ? "/dev/deskPi",
+  ...
+}:
 let
   pname = "deskpi4-tools";
   version = "0-unstable-20240723";

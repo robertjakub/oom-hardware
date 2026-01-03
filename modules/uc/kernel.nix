@@ -34,17 +34,16 @@ in
   # Apply the uConsole patches to the kernel
   boot.kernelPatches =
     # Convert each patch file to a kernel patch definition
-    (builtins.map
-      (patch: {
-        name = patch + ""; # Use patch filename as name
-        patch = patch;
-      })
-      patches
-    )
+    (builtins.map (patch: {
+      name = patch + ""; # Use patch filename as name
+      patch = patch;
+    }) patches)
     # Add an empty config patch (placeholder for future kernel config tweaks)
-    ++ [{
-      name = "uc-config";
-      patch = null;
-      structuredExtraConfig = { };
-    }];
+    ++ [
+      {
+        name = "uc-config";
+        patch = null;
+        structuredExtraConfig = { };
+      }
+    ];
 }

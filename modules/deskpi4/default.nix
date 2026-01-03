@@ -1,8 +1,16 @@
-{ lib, self, pkgs, ... }:
+{
+  lib,
+  self,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkDefault;
   device = "/dev/deskPi";
-  opt = enable: value: { enable = mkDefault enable; value = mkDefault value; };
+  opt = enable: value: {
+    enable = mkDefault enable;
+    value = mkDefault value;
+  };
 in
 {
   imports = [ self.nixosModules.nixpkgs ];

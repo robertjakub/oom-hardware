@@ -9,7 +9,12 @@
 #   mmcli -L             # List detected modems
 #   nmtui                # Connect via NetworkManager
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.hardware.uc-4g;
 

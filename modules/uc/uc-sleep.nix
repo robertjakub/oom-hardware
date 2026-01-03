@@ -6,7 +6,12 @@
 # The threshold can be configured via settings.
 # see [uConsole-sleep](https://github.com/robertjakub/uConsole-sleep/blob/main/README.md) for the possible settings
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.services.uc-sleep;
   envFile = pkgs.writeTextFile {
