@@ -58,5 +58,6 @@ in
   imports = [
     ./sdr.nix
     ./gps.nix
+    ./lora.nix
   ];
 }
