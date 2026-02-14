@@ -210,6 +210,7 @@
           configtxt = import modules/uc/configtxt.nix;
           base-cm4 = import modules/uc/base-cm4.nix;
           base-cm5 = import modules/uc/base-cm5.nix;
+          aio = import modules/uc/aio;
           sleep =
             {
               lib,
