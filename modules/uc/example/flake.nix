@@ -30,17 +30,10 @@
               config,
               lib,
               pkgs,
-              modulesPath,
               ...
             }:
             {
-              # START: workaround, see NixOS/nixpkgs#398456
-              imports = [
-                (lib.mkAliasOptionModule [ "environment" "checkConfigurationOptions" ] [ "_module" "check" ])
-              ];
-              disabledModules = [ (modulesPath + "/rename.nix") ];
-              # END:
-              boot.loader.raspberryPi.bootloader = "kernel"; # default for new installation
+              boot.loader.raspberry-pi.bootloader = "kernel"; # default for new installation
               boot.consoleLogLevel = 7;
               users.users.root.initialPassword = ""; # FIXME
               console = {

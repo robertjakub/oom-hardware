@@ -66,17 +66,15 @@
                     config,
                     lib,
                     pkgs,
-                    modulesPath,
                     ...
                   }:
                   {
-                    disabledModules = [ (modulesPath + "/rename.nix") ];
                     image.baseName =
                       let
-                        cfg = config.boot.loader.raspberryPi;
+                        cfg = config.boot.loader.raspberry-pi;
                       in
                       lib.mkOverride 40 "nixos-uc-cm${cfg.variant}";
-                    boot.loader.raspberryPi.bootloader = "kernel";
+                    boot.loader.raspberry-pi.bootloader = "kernel";
                     boot.consoleLogLevel = 7;
                     users.users.root.initialPassword = ""; # FIXME
                     sdImage = {
@@ -84,12 +82,12 @@
                       firmwarePartitionID = "0x2175794e";
                       compressImage = false; # FIXME
                       populateFirmwareCommands = ''
-                        ${config.boot.loader.raspberryPi.firmwarePopulateCmd} -c ${config.system.build.toplevel} -f ./firmware
+                        ${config.boot.loader.raspberry-pi.firmwarePopulateCmd} -c ${config.system.build.toplevel} -f ./firmware
                       '';
                       populateRootCommands = ''
                         # create with a mount point for FIRMWARE
                         mkdir -p ./files/boot/firmware
-                        ${config.boot.loader.raspberryPi.bootPopulateCmd} -c ${config.system.build.toplevel} -b ./files/boot
+                        ${config.boot.loader.raspberry-pi.bootPopulateCmd} -c ${config.system.build.toplevel} -b ./files/boot
                       '';
                     };
                     console = {
@@ -122,7 +120,7 @@
                     };
                     system.nixos.tags =
                       let
-                        cfg = config.boot.loader.raspberryPi;
+                        cfg = config.boot.loader.raspberry-pi;
                       in
                       [ "uc-cm${cfg.variant}" ];
                     system.stateVersion = "25.11";
