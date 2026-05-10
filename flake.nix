@@ -2,7 +2,7 @@
   description = "Flake for oom's hardware support on NixOS";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-raspberrypi.url = "github:robertjakub/nixos-raspberrypi/develop";
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/develop";
     nixos-raspberrypi.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =
@@ -123,7 +123,7 @@
                         cfg = config.boot.loader.raspberry-pi;
                       in
                       [ "uc-cm${cfg.variant}" ];
-                    system.stateVersion = "25.11";
+                    system.stateVersion = "26.05";
                     system.defaultChannel = "https://nixos.org/channels/nixos-unstable";
                     systemd.services."serial-getty@ttyS0".enable = false;
                     imports = [
